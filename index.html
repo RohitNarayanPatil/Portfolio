@@ -2,6 +2,11 @@
 <html lang="en">
 
 <head>
+  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js"></script>
+<script>
+  // Your Firebase SDK configuration comes here
+</script>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
@@ -108,7 +113,7 @@
 <p>
                 Bachelor of Science in Information Technology (2017-2020): Graduated with a CGPA of 7.11, where I delved
                 deep into the fundamentals of IT and honed my technical skills.
-                br Master of Computer Application (2021-2023): Further expanded my knowledge and expertise, achieving a
+                <br> Master of Computer Application (2021-2023): Further expanded my knowledge and expertise, achieving a
                 CGPA of 8.12, while specializing in cutting-edge technologies and software development methodologies.
 
             </div>
@@ -296,7 +301,7 @@
             </div>
 
             <div class="col-lg-6">
-              <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+              <form id="myForm" method="post" role="form" class="">
                 <div class="row gy-3">
 
                   <div class="col-lg-6">
@@ -332,7 +337,7 @@
                   </div>
 
                   <div class="mt-0">
-                    <input type="submit" class="btn btn-defeault btn-send" value="Send message">
+                    <input type="submit"  onclick="submitForm()" class="btn btn-defeault btn-send" value="Send message">
                   </div>
                 </div>
               </form>
@@ -388,7 +393,51 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
-
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.9.0/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyA2rl5PDbL68Of_DOJtTH7BKTKvNy7YjtM",
+      authDomain: "portfolio-2773e.firebaseapp.com",
+      projectId: "portfolio-2773e",
+      storageBucket: "portfolio-2773e.appspot.com",
+      messagingSenderId: "595056299529",
+      appId: "1:595056299529:web:5e558645e5f74581c032d8",
+      measurementId: "G-XNHWR5LNFZ"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+  <script>
+    function submitForm() {
+      const formData = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value
+      };
+  
+      // Get a reference to the database service
+      const database = firebase.database();
+  
+      // Push data to Firebase Realtime Database
+      database.ref('formSubmissions').push(formData)
+        .then(() => {
+          alert('Form submitted successfully!');
+          document.getElementById("myForm").reset();
+        })
+        .catch(error => {
+          console.error('Error submitting form:', error);
+        });
+    }
+  </script>
+  
 </body>
 
 </html>
